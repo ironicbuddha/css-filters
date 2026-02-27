@@ -238,6 +238,7 @@
                 border-radius: 12px;
                 overflow: hidden;
                 line-height: 0;
+                cursor: pointer;
             }
 
             .modal-content figure img {
@@ -566,6 +567,7 @@
 
             modalClose.addEventListener("click", closeModal);
             modalBack.addEventListener("click", closeModal);
+            modalFigure.addEventListener("click", closeModal);
             modal.addEventListener("click", (e) => {
                 if (e.target === modal) closeModal();
             });
