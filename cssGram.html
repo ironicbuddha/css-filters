@@ -1,405 +1,490 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>CSSgram Filter Gallery</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/cssgram/0.1.10/cssgram.min.css"
+        />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CSSgram Filter Gallery</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cssgram/0.1.10/cssgram.min.css">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+            body {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+                min-height: 100vh;
+                color: #fff;
+            }
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      min-height: 100vh;
-      color: #fff;
-    }
+            header {
+                text-align: center;
+                padding: 40px 20px 20px;
+            }
 
-    header {
-      text-align: center;
-      padding: 40px 20px 20px;
-    }
+            header h1 {
+                font-size: 3rem;
+                background: linear-gradient(90deg, #f093fb, #f5576c, #fda085);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                margin-bottom: 10px;
+            }
 
-    header h1 {
-      font-size: 3rem;
-      background: linear-gradient(90deg, #f093fb, #f5576c, #fda085);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 10px;
-    }
+            header p {
+                font-size: 1.1rem;
+                color: #aaa;
+                max-width: 600px;
+                margin: 0 auto;
+            }
 
-    header p {
-      font-size: 1.1rem;
-      color: #aaa;
-      max-width: 600px;
-      margin: 0 auto;
-    }
+            .controls {
+                text-align: center;
+                padding: 20px;
+                max-width: 800px;
+                margin: 0 auto;
+            }
 
-    .controls {
-      text-align: center;
-      padding: 20px;
-      max-width: 800px;
-      margin: 0 auto;
-    }
+            .controls label {
+                font-size: 1rem;
+                color: #ccc;
+                margin-right: 10px;
+            }
 
-    .controls label {
-      font-size: 1rem;
-      color: #ccc;
-      margin-right: 10px;
-    }
+            .controls input[type="text"] {
+                padding: 10px 16px;
+                border-radius: 25px;
+                border: 2px solid #555;
+                background: rgba(255, 255, 255, 0.08);
+                color: #fff;
+                font-size: 1rem;
+                width: 350px;
+                max-width: 80%;
+                outline: none;
+                transition: border-color 0.3s;
+            }
 
-    .controls input[type="text"] {
-      padding: 10px 16px;
-      border-radius: 25px;
-      border: 2px solid #555;
-      background: rgba(255, 255, 255, 0.08);
-      color: #fff;
-      font-size: 1rem;
-      width: 350px;
-      max-width: 80%;
-      outline: none;
-      transition: border-color 0.3s;
-    }
+            .controls input[type="text"]:focus {
+                border-color: #f5576c;
+            }
 
-    .controls input[type="text"]:focus {
-      border-color: #f5576c;
-    }
+            .controls .image-url-section {
+                margin-bottom: 15px;
+            }
 
-    .controls .image-url-section {
-      margin-bottom: 15px;
-    }
+            .controls .search-section {
+                margin-bottom: 10px;
+            }
 
-    .controls .search-section {
-      margin-bottom: 10px;
-    }
+            .controls .local-image-section {
+                margin-bottom: 15px;
+            }
 
-    .controls input[type="text"]::placeholder {
-      color: #777;
-    }
+            .controls input[type="file"] {
+                color: #ccc;
+                max-width: 80%;
+            }
 
-    .btn-apply {
-      padding: 10px 24px;
-      border-radius: 25px;
-      border: none;
-      background: linear-gradient(90deg, #f5576c, #fda085);
-      color: #fff;
-      font-size: 1rem;
-      cursor: pointer;
-      margin-left: 10px;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
+            .controls input[type="file"]::file-selector-button {
+                margin-right: 10px;
+                padding: 10px 16px;
+                border-radius: 25px;
+                border: 2px solid #555;
+                background: rgba(255, 255, 255, 0.08);
+                color: #fff;
+                cursor: pointer;
+                transition: border-color 0.3s;
+            }
 
-    .btn-apply:hover {
-      transform: scale(1.05);
-      box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
-    }
+            .controls input[type="file"]::file-selector-button:hover {
+                border-color: #f5576c;
+            }
 
-    .active-filter-display {
-      text-align: center;
-      padding: 10px 20px 5px;
-      font-size: 0.95rem;
-      color: #aaa;
-    }
+            .controls input[type="text"]::placeholder {
+                color: #777;
+            }
 
-    .active-filter-display span {
-      color: #fda085;
-      font-weight: bold;
-    }
+            .btn-apply {
+                padding: 10px 24px;
+                border-radius: 25px;
+                border: none;
+                background: linear-gradient(90deg, #f5576c, #fda085);
+                color: #fff;
+                font-size: 1rem;
+                cursor: pointer;
+                margin-left: 10px;
+                transition:
+                    transform 0.2s,
+                    box-shadow 0.2s;
+            }
 
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 25px;
-      padding: 30px 40px 60px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
+            .btn-apply:hover {
+                transform: scale(1.05);
+                box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+            }
 
-    .filter-card {
-      background: rgba(255, 255, 255, 0.06);
-      border-radius: 16px;
-      overflow: hidden;
-      transition: transform 0.3s, box-shadow 0.3s, opacity 0.3s;
-      cursor: pointer;
-      position: relative;
-    }
+            .active-filter-display {
+                text-align: center;
+                padding: 10px 20px 5px;
+                font-size: 0.95rem;
+                color: #aaa;
+            }
 
-    .filter-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
-    }
+            .active-filter-display span {
+                color: #fda085;
+                font-weight: bold;
+            }
 
-    .filter-card.hidden {
-      display: none;
-    }
+            .gallery {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 25px;
+                padding: 30px 40px 60px;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
 
-    .filter-card.selected {
-      box-shadow: 0 0 0 3px #f5576c, 0 12px 40px rgba(245, 87, 108, 0.3);
-    }
+            .filter-card {
+                background: rgba(255, 255, 255, 0.06);
+                border-radius: 16px;
+                overflow: hidden;
+                transition:
+                    transform 0.3s,
+                    box-shadow 0.3s,
+                    opacity 0.3s;
+                cursor: pointer;
+                position: relative;
+            }
 
-    .filter-card figure {
-      margin: 0;
-      padding: 0;
-      line-height: 0;
-    }
+            .filter-card:hover {
+                transform: translateY(-6px);
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+            }
 
-    .filter-card figure img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      display: block;
-    }
+            .filter-card.hidden {
+                display: none;
+            }
 
-    .filter-card .filter-name {
-      padding: 14px 16px;
-      text-align: center;
-      font-size: 1.05rem;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      text-transform: capitalize;
-      background: rgba(0, 0, 0, 0.3);
-    }
+            .filter-card.selected {
+                box-shadow:
+                    0 0 0 3px #f5576c,
+                    0 12px 40px rgba(245, 87, 108, 0.3);
+            }
 
-    .filter-card .filter-name .class-hint {
-      display: block;
-      font-size: 0.75rem;
-      color: #888;
-      font-weight: 400;
-      margin-top: 4px;
-      font-family: 'Courier New', monospace;
-    }
+            .filter-card figure {
+                margin: 0;
+                padding: 0;
+                line-height: 0;
+            }
 
-    /* Preview Modal */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.85);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
+            .filter-card figure img {
+                width: 100%;
+                height: 220px;
+                object-fit: cover;
+                display: block;
+            }
 
-    .modal-overlay.active {
-      display: flex;
-    }
+            .filter-card .filter-name {
+                padding: 14px 16px;
+                text-align: center;
+                font-size: 1.05rem;
+                font-weight: 600;
+                letter-spacing: 0.5px;
+                text-transform: capitalize;
+                background: rgba(0, 0, 0, 0.3);
+            }
 
-    .modal-content {
-      position: relative;
-      max-width: 1200px;
-      width: 90%;
-    }
+            .filter-card .filter-name .class-hint {
+                display: block;
+                font-size: 0.75rem;
+                color: #888;
+                font-weight: 400;
+                margin-top: 4px;
+                font-family: "Courier New", monospace;
+            }
 
-    .modal-content figure {
-      margin: 0;
-      border-radius: 12px;
-      overflow: hidden;
-      line-height: 0;
-    }
+            /* Preview Modal */
+            .modal-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.85);
+                z-index: 1000;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
 
-    .modal-content figure img {
-      width: 100%;
-      display: block;
-    }
+            .modal-overlay.active {
+                display: flex;
+            }
 
-    .modal-title {
-      text-align: center;
-      margin-top: 20px;
-      font-size: 1.5rem;
-      font-weight: 600;
-      text-transform: capitalize;
-    }
+            .modal-content {
+                position: relative;
+                max-width: 1200px;
+                width: 90%;
+            }
 
-    .modal-code {
-      text-align: center;
-      margin-top: 12px;
-      padding: 12px 20px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 8px;
-      font-family: 'Courier New', monospace;
-      font-size: 0.85rem;
-      color: #fda085;
-      user-select: all;
-      max-width: 100%;
-      overflow-x: auto;
-    }
+            .modal-content figure {
+                margin: 0;
+                border-radius: 12px;
+                overflow: hidden;
+                line-height: 0;
+            }
 
-    .modal-close {
-      position: absolute;
-      top: -40px;
-      right: 0;
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 2rem;
-      cursor: pointer;
-      line-height: 1;
-    }
+            .modal-content figure img {
+                width: 100%;
+                display: block;
+            }
 
-    .modal-close:hover {
-      color: #f5576c;
-    }
+            .modal-title {
+                text-align: center;
+                margin-top: 20px;
+                font-size: 1.5rem;
+                font-weight: 600;
+                text-transform: capitalize;
+            }
 
-    .comparison-toggle {
-      text-align: center;
-      margin-top: 15px;
-    }
+            .modal-code {
+                text-align: center;
+                margin-top: 12px;
+                padding: 12px 20px;
+                background: rgba(255, 255, 255, 0.08);
+                border-radius: 8px;
+                font-family: "Courier New", monospace;
+                font-size: 0.85rem;
+                color: #fda085;
+                user-select: all;
+                max-width: 100%;
+                overflow-x: auto;
+            }
 
-    .comparison-toggle button {
-      padding: 8px 20px;
-      border-radius: 20px;
-      border: 2px solid #555;
-      background: transparent;
-      color: #ccc;
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: all 0.3s;
-    }
+            .modal-close {
+                position: absolute;
+                top: -40px;
+                right: 0;
+                background: none;
+                border: none;
+                color: #fff;
+                font-size: 2rem;
+                cursor: pointer;
+                line-height: 1;
+            }
 
-    .comparison-toggle button:hover,
-    .comparison-toggle button.active {
-      border-color: #f5576c;
-      color: #fff;
-      background: rgba(245, 87, 108, 0.2);
-    }
+            .modal-close:hover {
+                color: #f5576c;
+            }
 
-    .no-results {
-      text-align: center;
-      grid-column: 1 / -1;
-      padding: 60px 20px;
-      color: #666;
-      font-size: 1.2rem;
-    }
+            .comparison-toggle {
+                text-align: center;
+                margin-top: 15px;
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+            }
 
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 2rem;
-      }
+            .comparison-toggle button {
+                padding: 8px 20px;
+                border-radius: 20px;
+                border: 2px solid #555;
+                background: transparent;
+                color: #ccc;
+                cursor: pointer;
+                font-size: 0.9rem;
+                transition: all 0.3s;
+            }
 
-      .gallery {
-        padding: 20px 15px 40px;
-        gap: 15px;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      }
+            .comparison-toggle button:hover,
+            .comparison-toggle button.active {
+                border-color: #f5576c;
+                color: #fff;
+                background: rgba(245, 87, 108, 0.2);
+            }
 
-      .filter-card figure img {
-        height: 160px;
-      }
-    }
-  </style>
-</head>
+            .comparison-toggle button:disabled {
+                opacity: 0.7;
+                cursor: wait;
+            }
 
-<body>
+            .no-results {
+                text-align: center;
+                grid-column: 1 / -1;
+                padding: 60px 20px;
+                color: #666;
+                font-size: 1.2rem;
+            }
 
-  <header>
-    <h1>CSSgram Filter Gallery</h1>
-    <p>Browse and preview all CSSgram Instagram-style CSS filters. Click any filter to see it in detail with the code
-      snippet.</p>
-  </header>
+            @media (max-width: 600px) {
+                header h1 {
+                    font-size: 2rem;
+                }
 
-  <div class="controls">
-    <div class="image-url-section">
-      <label for="imageUrl">Image URL:</label>
-      <input type="text" id="imageUrl" placeholder="Paste an image URL and click Apply..."
-        value="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800">
-      <button class="btn-apply" id="applyImageBtn">Apply</button>
-    </div>
-    <div class="search-section">
-      <input type="text" id="searchInput" placeholder="Search filters...">
-    </div>
-  </div>
+                .gallery {
+                    padding: 20px 15px 40px;
+                    gap: 15px;
+                    grid-template-columns: repeat(
+                        auto-fill,
+                        minmax(200px, 1fr)
+                    );
+                }
 
-  <div class="active-filter-display" id="activeFilterDisplay"></div>
+                .filter-card figure img {
+                    height: 160px;
+                }
+            }
+        </style>
+    </head>
 
-  <div class="gallery" id="gallery"></div>
+    <body>
+        <header>
+            <h1>CSSgram Filter Gallery</h1>
+            <p>
+                Browse and preview all CSSgram Instagram-style CSS filters.
+                Click any filter to see it in detail with the code snippet.
+            </p>
+        </header>
 
-  <!-- Modal -->
-  <div class="modal-overlay" id="modal">
-    <div class="modal-content">
-      <button class="modal-close" id="modalClose">&times;</button>
-      <figure id="modalFigure">
-        <img id="modalImg" src="" alt="Preview">
-      </figure>
-      <div class="modal-title" id="modalTitle"></div>
-      <div class="modal-code" id="modalCode"></div>
-      <div class="comparison-toggle">
-        <button id="toggleComparison">Toggle Original</button>
-      </div>
-    </div>
-  </div>
+        <div class="controls">
+            <div class="local-image-section">
+                <label for="imageFile">Local Image:</label>
+                <input type="file" id="imageFile" accept="image/*" />
+            </div>
+            <div class="image-url-section">
+                <label for="imageUrl">Image URL:</label>
+                <input
+                    type="text"
+                    id="imageUrl"
+                    placeholder="Paste an image URL and click Apply..."
+                    value="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800"
+                />
+                <button class="btn-apply" id="applyImageBtn">Apply</button>
+            </div>
+            <div class="search-section">
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search filters..."
+                />
+            </div>
+        </div>
 
-  <script>
-    const filters = [
-      '_1977', 'aden', 'brannan', 'brooklyn', 'clarendon', 'earlybird',
-      'gingham', 'hudson', 'inkwell', 'kelvin', 'lark', 'lofi',
-      'maven', 'mayfair', 'moon', 'nashville', 'perpetua', 'reyes',
-      'rise', 'slumber', 'stinson', 'toaster', 'valencia', 'walden',
-      'willow', 'xpro2'
-    ];
+        <div class="active-filter-display" id="activeFilterDisplay"></div>
 
-    const displayNames = {
-      '_1977': '1977',
-      'aden': 'Aden',
-      'brannan': 'Brannan',
-      'brooklyn': 'Brooklyn',
-      'clarendon': 'Clarendon',
-      'earlybird': 'Earlybird',
-      'gingham': 'Gingham',
-      'hudson': 'Hudson',
-      'inkwell': 'Inkwell',
-      'kelvin': 'Kelvin',
-      'lark': 'Lark',
-      'lofi': 'Lo-Fi',
-      'maven': 'Maven',
-      'mayfair': 'Mayfair',
-      'moon': 'Moon',
-      'nashville': 'Nashville',
-      'perpetua': 'Perpetua',
-      'reyes': 'Reyes',
-      'rise': 'Rise',
-      'slumber': 'Slumber',
-      'stinson': 'Stinson',
-      'toaster': 'Toaster',
-      'valencia': 'Valencia',
-      'walden': 'Walden',
-      'willow': 'Willow',
-      'xpro2': 'X-Pro II'
-    };
+        <div class="gallery" id="gallery"></div>
 
-    let currentImageUrl = document.getElementById('imageUrl').value;
-    let showingOriginal = false;
-    let currentModalFilter = '';
+        <!-- Modal -->
+        <div class="modal-overlay" id="modal">
+            <div class="modal-content">
+                <button class="modal-close" id="modalClose">&times;</button>
+                <figure id="modalFigure">
+                    <img id="modalImg" src="" alt="Preview" />
+                </figure>
+                <div class="modal-title" id="modalTitle"></div>
+                <div class="modal-code" id="modalCode"></div>
+                <div class="comparison-toggle">
+                    <button id="toggleComparison">Toggle Original</button>
+                    <button id="downloadFiltered">Download PNG</button>
+                </div>
+            </div>
+        </div>
 
-    const gallery = document.getElementById('gallery');
-    const searchInput = document.getElementById('searchInput');
-    const modal = document.getElementById('modal');
-    const modalFigure = document.getElementById('modalFigure');
-    const modalImg = document.getElementById('modalImg');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalCode = document.getElementById('modalCode');
-    const modalClose = document.getElementById('modalClose');
-    const toggleComparison = document.getElementById('toggleComparison');
-    const applyImageBtn = document.getElementById('applyImageBtn');
-    const imageUrlInput = document.getElementById('imageUrl');
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+        <script>
+            const filters = [
+                "_1977",
+                "aden",
+                "brannan",
+                "brooklyn",
+                "clarendon",
+                "earlybird",
+                "gingham",
+                "hudson",
+                "inkwell",
+                "kelvin",
+                "lark",
+                "lofi",
+                "maven",
+                "mayfair",
+                "moon",
+                "nashville",
+                "perpetua",
+                "reyes",
+                "rise",
+                "slumber",
+                "stinson",
+                "toaster",
+                "valencia",
+                "walden",
+                "willow",
+                "xpro2",
+            ];
 
-    function buildGallery() {
-      gallery.innerHTML = '';
+            const displayNames = {
+                _1977: "1977",
+                aden: "Aden",
+                brannan: "Brannan",
+                brooklyn: "Brooklyn",
+                clarendon: "Clarendon",
+                earlybird: "Earlybird",
+                gingham: "Gingham",
+                hudson: "Hudson",
+                inkwell: "Inkwell",
+                kelvin: "Kelvin",
+                lark: "Lark",
+                lofi: "Lo-Fi",
+                maven: "Maven",
+                mayfair: "Mayfair",
+                moon: "Moon",
+                nashville: "Nashville",
+                perpetua: "Perpetua",
+                reyes: "Reyes",
+                rise: "Rise",
+                slumber: "Slumber",
+                stinson: "Stinson",
+                toaster: "Toaster",
+                valencia: "Valencia",
+                walden: "Walden",
+                willow: "Willow",
+                xpro2: "X-Pro II",
+            };
 
-      // Add "No Filter" card first
-      const noFilterCard = document.createElement('div');
-      noFilterCard.className = 'filter-card';
-      noFilterCard.dataset.filter = 'none';
-      noFilterCard.innerHTML = `
+            let currentImageUrl = document.getElementById("imageUrl").value;
+            let showingOriginal = false;
+            let currentModalFilter = "";
+
+            const gallery = document.getElementById("gallery");
+            const searchInput = document.getElementById("searchInput");
+            const modal = document.getElementById("modal");
+            const modalFigure = document.getElementById("modalFigure");
+            const modalImg = document.getElementById("modalImg");
+            const modalTitle = document.getElementById("modalTitle");
+            const modalCode = document.getElementById("modalCode");
+            const modalClose = document.getElementById("modalClose");
+            const toggleComparison =
+                document.getElementById("toggleComparison");
+            const downloadFiltered =
+                document.getElementById("downloadFiltered");
+            const applyImageBtn = document.getElementById("applyImageBtn");
+            const imageUrlInput = document.getElementById("imageUrl");
+            const imageFileInput = document.getElementById("imageFile");
+            let currentLocalObjectUrl = "";
+
+            function buildGallery() {
+                gallery.innerHTML = "";
+
+                // Add "No Filter" card first
+                const noFilterCard = document.createElement("div");
+                noFilterCard.className = "filter-card";
+                noFilterCard.dataset.filter = "none";
+                noFilterCard.innerHTML = `
             <figure>
                 <img src="${currentImageUrl}" alt="No Filter">
             </figure>
@@ -408,14 +493,14 @@
                 <span class="class-hint">No class needed</span>
             </div>
         `;
-      noFilterCard.addEventListener('click', () => openModal('none'));
-      gallery.appendChild(noFilterCard);
+                noFilterCard.addEventListener("click", () => openModal("none"));
+                gallery.appendChild(noFilterCard);
 
-      filters.forEach(filter => {
-        const card = document.createElement('div');
-        card.className = 'filter-card';
-        card.dataset.filter = filter;
-        card.innerHTML = `
+                filters.forEach((filter) => {
+                    const card = document.createElement("div");
+                    card.className = "filter-card";
+                    card.dataset.filter = filter;
+                    card.innerHTML = `
                 <figure class="${filter}">
                     <img src="${currentImageUrl}" alt="${displayNames[filter]}">
                 </figure>
@@ -424,107 +509,164 @@
                     <span class="class-hint">class="${filter}"</span>
                 </div>
             `;
-        card.addEventListener('click', () => openModal(filter));
-        gallery.appendChild(card);
-      });
-    }
+                    card.addEventListener("click", () => openModal(filter));
+                    gallery.appendChild(card);
+                });
+            }
 
-    function openModal(filter) {
-      currentModalFilter = filter;
-      showingOriginal = false;
-      toggleComparison.classList.remove('active');
-      toggleComparison.textContent = 'Toggle Original';
+            function openModal(filter) {
+                currentModalFilter = filter;
+                showingOriginal = false;
+                toggleComparison.classList.remove("active");
+                toggleComparison.textContent = "Toggle Original";
 
-      modalImg.src = currentImageUrl;
+                modalImg.src = currentImageUrl;
 
-      if (filter === 'none') {
-        modalFigure.className = '';
-        modalTitle.textContent = 'Original (No Filter)';
-        modalCode.innerHTML = `&lt;figure&gt;\n  &lt;img src="your-image.png"&gt;\n&lt;/figure&gt;`;
-      } else {
-        modalFigure.className = filter;
-        modalTitle.textContent = displayNames[filter];
-        modalCode.innerHTML = `&lt;figure class="${filter}"&gt;\n  &lt;img src="your-image.png"&gt;\n&lt;/figure&gt;`;
-      }
+                if (filter === "none") {
+                    modalFigure.className = "";
+                    modalTitle.textContent = "Original (No Filter)";
+                    modalCode.innerHTML = `&lt;figure&gt;\n  &lt;img src="your-image.png"&gt;\n&lt;/figure&gt;`;
+                } else {
+                    modalFigure.className = filter;
+                    modalTitle.textContent = displayNames[filter];
+                    modalCode.innerHTML = `&lt;figure class="${filter}"&gt;\n  &lt;img src="your-image.png"&gt;\n&lt;/figure&gt;`;
+                }
 
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
+                modal.classList.add("active");
+                document.body.style.overflow = "hidden";
+            }
 
-    function closeModal() {
-      modal.classList.remove('active');
-      document.body.style.overflow = '';
-    }
+            function closeModal() {
+                modal.classList.remove("active");
+                document.body.style.overflow = "";
+            }
 
-    modalClose.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeModal();
-    });
+            modalClose.addEventListener("click", closeModal);
+            modal.addEventListener("click", (e) => {
+                if (e.target === modal) closeModal();
+            });
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape") closeModal();
+            });
 
-    toggleComparison.addEventListener('click', () => {
-      showingOriginal = !showingOriginal;
-      if (showingOriginal) {
-        modalFigure.className = '';
-        toggleComparison.classList.add('active');
-        toggleComparison.textContent = 'Show Filter';
-      } else {
-        if (currentModalFilter !== 'none') {
-          modalFigure.className = currentModalFilter;
-        }
-        toggleComparison.classList.remove('active');
-        toggleComparison.textContent = 'Toggle Original';
-      }
-    });
+            toggleComparison.addEventListener("click", () => {
+                showingOriginal = !showingOriginal;
+                if (showingOriginal) {
+                    modalFigure.className = "";
+                    toggleComparison.classList.add("active");
+                    toggleComparison.textContent = "Show Filter";
+                } else {
+                    if (currentModalFilter !== "none") {
+                        modalFigure.className = currentModalFilter;
+                    }
+                    toggleComparison.classList.remove("active");
+                    toggleComparison.textContent = "Toggle Original";
+                }
+            });
 
-    searchInput.addEventListener('input', () => {
-      const query = searchInput.value.toLowerCase().trim();
-      const cards = gallery.querySelectorAll('.filter-card');
-      let visibleCount = 0;
+            searchInput.addEventListener("input", () => {
+                const query = searchInput.value.toLowerCase().trim();
+                const cards = gallery.querySelectorAll(".filter-card");
+                let visibleCount = 0;
 
-      cards.forEach(card => {
-        const filter = card.dataset.filter;
-        const name = filter === 'none' ? 'original no filter' : (displayNames[filter] || filter).toLowerCase();
-        if (name.includes(query) || filter.toLowerCase().includes(query)) {
-          card.classList.remove('hidden');
-          visibleCount++;
-        } else {
-          card.classList.add('hidden');
-        }
-      });
+                cards.forEach((card) => {
+                    const filter = card.dataset.filter;
+                    const name =
+                        filter === "none"
+                            ? "original no filter"
+                            : (displayNames[filter] || filter).toLowerCase();
+                    if (
+                        name.includes(query) ||
+                        filter.toLowerCase().includes(query)
+                    ) {
+                        card.classList.remove("hidden");
+                        visibleCount++;
+                    } else {
+                        card.classList.add("hidden");
+                    }
+                });
 
-      // Remove existing no-results message
-      const existingMsg = gallery.querySelector('.no-results');
-      if (existingMsg) existingMsg.remove();
+                // Remove existing no-results message
+                const existingMsg = gallery.querySelector(".no-results");
+                if (existingMsg) existingMsg.remove();
 
-      if (visibleCount === 0) {
-        const msg = document.createElement('div');
-        msg.className = 'no-results';
-        msg.textContent = `No filters found matching "${searchInput.value}"`;
-        gallery.appendChild(msg);
-      }
-    });
+                if (visibleCount === 0) {
+                    const msg = document.createElement("div");
+                    msg.className = "no-results";
+                    msg.textContent = `No filters found matching "${searchInput.value}"`;
+                    gallery.appendChild(msg);
+                }
+            });
 
-    applyImageBtn.addEventListener('click', () => {
-      const url = imageUrlInput.value.trim();
-      if (url) {
-        currentImageUrl = url;
-        buildGallery();
-      }
-    });
+            applyImageBtn.addEventListener("click", () => {
+                const url = imageUrlInput.value.trim();
+                if (url) {
+                    if (currentLocalObjectUrl) {
+                        URL.revokeObjectURL(currentLocalObjectUrl);
+                        currentLocalObjectUrl = "";
+                    }
+                    currentImageUrl = url;
+                    buildGallery();
+                }
+            });
 
-    imageUrlInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        applyImageBtn.click();
-      }
-    });
+            imageUrlInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    applyImageBtn.click();
+                }
+            });
 
-    // Initialize
-    buildGallery();
-  </script>
+            imageFileInput.addEventListener("change", () => {
+                const file = imageFileInput.files && imageFileInput.files[0];
+                if (!file) return;
 
-</body>
+                if (currentLocalObjectUrl) {
+                    URL.revokeObjectURL(currentLocalObjectUrl);
+                }
 
+                currentLocalObjectUrl = URL.createObjectURL(file);
+                currentImageUrl = currentLocalObjectUrl;
+                imageUrlInput.value = "";
+                buildGallery();
+            });
+
+            downloadFiltered.addEventListener("click", async () => {
+                if (
+                    !modal.classList.contains("active") ||
+                    typeof html2canvas === "undefined"
+                )
+                    return;
+
+                const previousLabel = downloadFiltered.textContent;
+                downloadFiltered.disabled = true;
+                downloadFiltered.textContent = "Preparing...";
+
+                try {
+                    const canvas = await html2canvas(modalFigure, {
+                        backgroundColor: null,
+                        useCORS: true,
+                        scale: 2,
+                    });
+                    const link = document.createElement("a");
+                    const filterName =
+                        currentModalFilter === "none"
+                            ? "original"
+                            : currentModalFilter;
+                    link.download = `cssgram-${filterName}.png`;
+                    link.href = canvas.toDataURL("image/png");
+                    link.click();
+                } catch (error) {
+                    alert(
+                        "Could not export this image. Try a local file instead.",
+                    );
+                } finally {
+                    downloadFiltered.disabled = false;
+                    downloadFiltered.textContent = previousLabel;
+                }
+            });
+
+            // Initialize
+            buildGallery();
+        </script>
+    </body>
 </html>
