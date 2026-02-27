@@ -283,6 +283,25 @@
                 color: #f5576c;
             }
 
+            .modal-back {
+                position: absolute;
+                top: -40px;
+                left: 0;
+                padding: 8px 14px;
+                border-radius: 20px;
+                border: 2px solid #555;
+                background: rgba(255, 255, 255, 0.08);
+                color: #fff;
+                font-size: 0.85rem;
+                cursor: pointer;
+                transition: all 0.3s;
+            }
+
+            .modal-back:hover {
+                border-color: #f5576c;
+                background: rgba(245, 87, 108, 0.2);
+            }
+
             .comparison-toggle {
                 text-align: center;
                 margin-top: 15px;
@@ -383,6 +402,9 @@
         <!-- Modal -->
         <div class="modal-overlay" id="modal">
             <div class="modal-content">
+                <button class="modal-back" id="modalBack" type="button">
+                    &larr; Back to gallery
+                </button>
                 <button class="modal-close" id="modalClose">&times;</button>
                 <figure id="modalFigure">
                     <img id="modalImg" src="" alt="Preview" />
@@ -468,6 +490,7 @@
             const modalTitle = document.getElementById("modalTitle");
             const modalCode = document.getElementById("modalCode");
             const modalClose = document.getElementById("modalClose");
+            const modalBack = document.getElementById("modalBack");
             const toggleComparison =
                 document.getElementById("toggleComparison");
             const downloadFiltered =
@@ -542,6 +565,7 @@
             }
 
             modalClose.addEventListener("click", closeModal);
+            modalBack.addEventListener("click", closeModal);
             modal.addEventListener("click", (e) => {
                 if (e.target === modal) closeModal();
             });
